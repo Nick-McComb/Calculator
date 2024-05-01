@@ -3,12 +3,9 @@
 from PyQt6.QtWidgets import QWidget, QApplication, QPushButton, QLabel
 import sys 
 from PyQt6.QtGui import QIcon, QFont
+from functools import partial
 
-#def mk_button(btn , x , y):
-    #btn.setGeometry(x,y,58,26)
-    #btn.setFont(QFont('Times New Roman',15))
-    #btn.setStyleSheet('background-color:#f7fffd')
-    #btn.clicked.connect(self.clicked_button())
+
 
 class Window(QWidget):
     def __init__(self):
@@ -23,7 +20,7 @@ class Window(QWidget):
 #making buttons
         self.mk_button("0",78,564)
         self.mk_button(".",146,564)
-        self.mk_button("Sto>", 10,528)
+        #self.mk_button("Sto>", 10,528)
         self.mk_button("1", 78,528)
         self.mk_button("2", 146,528)
         self.mk_button("3",214,528)
@@ -36,26 +33,17 @@ class Window(QWidget):
         btn.setGeometry(x,y,58,26)
         btn.setFont(QFont('Times New Roman',15))
         btn.setStyleSheet('background-color:#f7fffd')
-        #btn.clicked.connect(self.clicked_button(text))
+        btn.clicked.connect(partial(self.clicked_button,text))
 
     def create_widgets(self):
-        #self.mk_button(1,78,564)
-      
-
-    
-
-
-        #btn1.setGeometry(78,564,58,26)
-        #btn1.setFont(QFont('Times New Roman',15))
-        #btn1.setStyleSheet('background-color:#f7fffd')
-        #btn1.setFixedSize(100,80)
-
         self.label = QLabel("", self)
         self.label.setGeometry(10,10,330,184)
         self.label.setStyleSheet('background-color:#a6bf9f')
+        self.label.setFont(QFont('Times New Roman', 15))
 
-    def clicked_button(self,text):
-        self.label.setText(text)
+    def clicked_button(self,something):
+        current_text = self.label.text()
+        self.label.setText(current_text+something)
         
 
 app = QApplication([])
