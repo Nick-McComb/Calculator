@@ -4,10 +4,12 @@ from PyQt6.QtWidgets import QWidget, QApplication, QPushButton, QLabel
 import sys 
 from PyQt6.QtGui import QIcon, QFont
 from functools import partial
+from PyQt6.QtCore import Qt
 
 
 
 class Window(QWidget):
+    
     def __init__(self):
         super().__init__()
 #icon & title
@@ -24,27 +26,43 @@ class Window(QWidget):
         self.mk_button("1", 78,528)
         self.mk_button("2", 146,528)
         self.mk_button("3",214,528)
-        self.mk_button("+",282,528)
+        self.mk_button("+",282,528, '#A9A7A7')
+        self.mk_button("ENTER",282,564,'#A9A7A7', 12)
+        self.n=0
 #add screen
         self.create_widgets()
+
     
-    def mk_button(self,text, x , y):
+
+    def mk_button(self,text, x , y, color ='#f7fffd', font = 15):
         btn = QPushButton(text,self)
         btn.setGeometry(x,y,58,26)
-        btn.setFont(QFont('Times New Roman',15))
-        btn.setStyleSheet('background-color:#f7fffd')
+        btn.setFont(QFont('Times New Roman',font))
+        btn.setStyleSheet('background-color:'+color)
         btn.clicked.connect(partial(self.clicked_button,text))
+
+
 
     def create_widgets(self):
         self.label = QLabel("", self)
+        self.label.setAlignment(Qt.AlignmentFlag.AlignLeft)
         self.label.setGeometry(10,10,330,184)
         self.label.setStyleSheet('background-color:#a6bf9f')
-        self.label.setFont(QFont('Times New Roman', 15))
-
+        self.label.setFont(QFont('Times New Roman', 17))
+    
     def clicked_button(self,something):
         current_text = self.label.text()
-        self.label.setText(current_text+something)
+
+        if something == "ENTER":
+            new_line_text= self.label.text().split('\n')[self.n]
+            self.label.setText(current_text + "\n" + str(eval(new_line_text)))
+            self.n+=1
+        else:
+                #current_text = self.label.text()
+                self.label.setText(current_text+something)
         
+
+
 
 app = QApplication([])
 window = Window()
