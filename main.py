@@ -47,6 +47,7 @@ class Window(QWidget):
 #some variables
         self.n=0
         self.new_line_text = ""
+        self.hidden_text = ""
 #add screen
         self.create_widgets()
 
@@ -71,26 +72,36 @@ class Window(QWidget):
     
     def clicked_button(self,something):
         current_text = self.label.text()
+        #self.hidden_text = self.hidden_text + something
 
         if something == "ENTER":
-            self.new_line_text= str(eval(self.label.text().split('\n')[self.n]))
+            #self.new_line_text= str(eval(self.hidden_text.split('\n')[self.n]))
+            self.new_line_text= str(eval(self.hidden_text))
             self.label.setText(current_text + "\n" + self.new_line_text + "\n")
+            self.hidden_text = ""
             self.n+=2
         elif something == "CLEAR":
              current_text = ""
              self.new_line_text = ""
+             self.hidden_text = ""
              self.n=0
              self.label.setText(current_text)
         else:
                 #current_text = self.label.text()
                 if something == "+" or something == "-" or something == "/" or something == "*":
                     current_text = current_text + self.new_line_text
-
+                    self.hidden_text = self.hidden_text + self.new_line_text
+                elif len(current_text) > 0 and something == "(" and current_text[-1].isdigit() or len(current_text) > 0 and something == "(" and current_text[-1] == ")": 
+                     self.hidden_text = self.hidden_text + "*"
+                
                 self.label.setText(current_text+something)
+                self.hidden_text = self.hidden_text + something
                 self.new_line_text = ""
+                print(self.hidden_text)
+                #current_text = self.label.text()
+               
                 
         
-
 
 
 app = QApplication([])
