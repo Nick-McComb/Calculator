@@ -29,6 +29,7 @@ class Window(QWidget):
         self.mk_button("+",282,528, '#A9A7A7')
         self.mk_button("ENTER",282,564,'#A9A7A7', 12)
         self.n=0
+        self.new_line_text = ""
 #add screen
         self.create_widgets()
 
@@ -54,12 +55,15 @@ class Window(QWidget):
         current_text = self.label.text()
 
         if something == "ENTER":
-            new_line_text= self.label.text().split('\n')[self.n]
-            self.label.setText(current_text + "\n" + str(eval(new_line_text)))
-            self.n+=1
+            self.new_line_text= str(eval(self.label.text().split('\n')[self.n]))
+            self.label.setText(current_text + "\n" + self.new_line_text + "\n")
+            self.n+=2
         else:
                 #current_text = self.label.text()
+                current_text = current_text + self.new_line_text
                 self.label.setText(current_text+something)
+                self.new_line_text = ""
+                
         
 
 
