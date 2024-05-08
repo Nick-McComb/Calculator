@@ -26,8 +26,11 @@ class Window(QWidget):
         self.mk_button("1", 78,528)
         self.mk_button("2", 146,528)
         self.mk_button("3",214,528)
-        self.mk_button("+",282,528, '#A9A7A7')
-        self.mk_button("ENTER",282,564,'#A9A7A7', 12)
+        self.mk_button("+",282,528, '#A9A7A7', 18)
+        self.mk_button("-",282,492, '#A9A7A7',20)
+        self.mk_button("*",282,456, '#A9A7A7', 18)
+        self.mk_button("/",282,420, '#A9A7A7',20)
+        self.mk_button("ENTER",282,564,'#A9A7A7', 10, 551)
         self.n=0
         self.new_line_text = ""
 #add screen
@@ -35,10 +38,10 @@ class Window(QWidget):
 
     
 
-    def mk_button(self,text, x , y, color ='#f7fffd', font = 15):
+    def mk_button(self,text, x , y, color ='#f7fffd', font = 15, weight_num = 5000):
         btn = QPushButton(text,self)
         btn.setGeometry(x,y,58,26)
-        btn.setFont(QFont('Times New Roman',font))
+        btn.setFont(QFont('Times New Roman',font, weight=weight_num))
         btn.setStyleSheet('background-color:'+color)
         btn.clicked.connect(partial(self.clicked_button,text))
 
@@ -47,6 +50,7 @@ class Window(QWidget):
     def create_widgets(self):
         self.label = QLabel("", self)
         self.label.setAlignment(Qt.AlignmentFlag.AlignLeft)
+        self.label.setIndent(10)
         self.label.setGeometry(10,10,330,184)
         self.label.setStyleSheet('background-color:#a6bf9f')
         self.label.setFont(QFont('Times New Roman', 17))
@@ -60,7 +64,9 @@ class Window(QWidget):
             self.n+=2
         else:
                 #current_text = self.label.text()
-                current_text = current_text + self.new_line_text
+                if something == "+" or something == "-" or something == "/" or something == "*":
+                    current_text = current_text + self.new_line_text
+
                 self.label.setText(current_text+something)
                 self.new_line_text = ""
                 
