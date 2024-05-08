@@ -1,5 +1,5 @@
-#import numpy as np
-#import math as math
+import numpy as np
+import math as math
 from PyQt6.QtWidgets import QWidget, QApplication, QPushButton, QLabel
 import sys 
 from PyQt6.QtGui import QIcon, QFont
@@ -19,19 +19,32 @@ class Window(QWidget):
         self.setFixedHeight(600)
         self.setFixedWidth(350)
         self.setStyleSheet('background-color:black')
-#making buttons
+#making buttons 
+        #self.mk_button("Sto>", 10,528)
         self.mk_button("0",78,564)
         self.mk_button(".",146,564)
-        #self.mk_button("Sto>", 10,528)
         self.mk_button("1", 78,528)
         self.mk_button("2", 146,528)
         self.mk_button("3",214,528)
+        self.mk_button("4", 78,492)
+        self.mk_button("5", 146,492)
+        self.mk_button("6", 214,492)
+        self.mk_button("7", 78,456)
+        self.mk_button("8", 146,456)
+        self.mk_button("9",214,456)
+        self.mk_button("(", 146,420, '#f7fffd', 13)
+        self.mk_button(")",214,420, '#f7fffd', 13)
+        
+
+#MDAS
         self.mk_button("+",282,528, '#A9A7A7', 18)
         self.mk_button("-",282,492, '#A9A7A7',20)
         self.mk_button("*",282,456, '#A9A7A7', 18)
         self.mk_button("/",282,420, '#A9A7A7',20)
+#CLEAR/ENTER
         self.mk_button("ENTER",282,564,'#A9A7A7', 10, 551)
         self.mk_button("CLEAR",282,348,'#A9A7A7', 10, 551)
+#some variables
         self.n=0
         self.new_line_text = ""
 #add screen
