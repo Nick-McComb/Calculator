@@ -67,7 +67,7 @@ class Window(QWidget):
         self.buttons.append(self.btn)
         self.prim_text.append(prim_text)
         self.sec_text.append(sec_text)
-        self.btn.clicked.connect(partial(self.clicked_button,prim_text))
+        self.btn.clicked.connect(partial(self.clicked_button,prim_text, sec_text))
 
 
 
@@ -80,21 +80,24 @@ class Window(QWidget):
         self.label.setStyleSheet('background-color:#a6bf9f')
         self.label.setFont(QFont('Times New Roman', 17))
     
-    def clicked_button(self,something):
+    def clicked_button(self,something, second_something):
         current_text = self.label.text()
         #self.hidden_text = self.hidden_text + something
 
 #2nd change button text
-        if something == "2nd" and self.n == 0:
-             self.n = 1
-             #self.prim_text = self.sec_text
+        if something == "2nd" and self.n == 1:
+             self.n = 0
              for i in range(len(self.buttons)):
                 self.buttons[i].setText(self.prim_text[i])
-        elif something == "2nd" and self.n == 1:
-             self.n =0
-             #self.prim_text = self.sec_text
+             
+
+        elif something == "2nd" and self.n == 0:
+             self.n =1
+             
              for i in range(len(self.buttons)):
                 self.buttons[i].setText(self.sec_text[i])
+
+
         elif something == "ENTER":
             #self.new_line_text= str(eval(self.hidden_text.split('\n')[self.n]))
             self.new_line_text= str(eval(self.hidden_text))
@@ -105,7 +108,7 @@ class Window(QWidget):
              self.new_line_text = ""
              self.hidden_text = ""
              self.label.setText(current_text)
-        else:
+        elif something != "2nd" and self.n==0:
                 if something == "+" or something == "-" or something == "/" or something == "*":
                     current_text = current_text + self.new_line_text
                     self.hidden_text = self.hidden_text + self.new_line_text
@@ -116,6 +119,11 @@ class Window(QWidget):
                 self.hidden_text = self.hidden_text + something
                 self.new_line_text = ""
                 print(self.hidden_text)
+        elif something != "2nd" and self.n ==1:
+            self.label.setText(current_text+second_something)
+            self.hidden_text = self.hidden_text + second_something
+            self.new_line_text = ""
+            print(self.hidden_text)
                 
 
 app = QApplication([])
