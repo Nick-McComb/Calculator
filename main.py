@@ -98,34 +98,64 @@ class Window(QWidget):
                 self.buttons[i].setText(self.sec_text[i])
 
 
-        elif something == "ENTER":
+        #elif something == "ENTER":
             #self.new_line_text= str(eval(self.hidden_text.split('\n')[self.n]))
-            self.new_line_text= str(eval(self.hidden_text))
-            self.label.setText(current_text + "\n" + self.new_line_text + "\n")
-            self.hidden_text = ""
-        elif something == "CLEAR":
-             current_text = ""
-             self.new_line_text = ""
-             self.hidden_text = ""
-             self.label.setText(current_text)
+            #self.new_line_text= str(eval(self.hidden_text))
+            #self.label.setText(current_text + "\n" + self.new_line_text + "\n")
+            #self.hidden_text = ""
+        #elif something == "CLEAR":
+             #current_text = ""
+             #self.new_line_text = ""
+             #self.hidden_text = ""
+             #self.label.setText(current_text)
         elif something != "2nd" and self.n==0:
-                if something == "+" or something == "-" or something == "/" or something == "*":
-                    current_text = current_text + self.new_line_text
-                    self.hidden_text = self.hidden_text + self.new_line_text
+                if something == "ENTER":
+                #self.new_line_text= str(eval(self.hidden_text.split('\n')[self.n]))
+                        self.new_line_text= str(eval(self.hidden_text))
+                        self.label.setText(current_text + "\n" + self.new_line_text + "\n")
+                        self.hidden_text = ""
+                elif something == "CLEAR":
+                        current_text = ""
+                        self.new_line_text = ""
+                        self.hidden_text = ""
+                        self.label.setText(current_text)
+                elif something == "+" or something == "-" or something == "/" or something == "*":
+                    current_text = current_text + self.new_line_text 
+                    self.hidden_text = self.hidden_text + self.new_line_text 
+                    self.label.setText(current_text+something)
+                    self.hidden_text = self.hidden_text + something
+                    self.new_line_text = ""
+                    print(self.hidden_text)
+                        
                 elif len(current_text) > 0 and something == "(" and current_text[-1].isdigit() or len(current_text) > 0 and something == "(" and current_text[-1] == ")": 
                      self.hidden_text = self.hidden_text + "*"
-                
-                self.label.setText(current_text+something)
-                self.hidden_text = self.hidden_text + something
+                     self.label.setText(current_text+something)
+                     self.hidden_text = self.hidden_text + something
+                     self.new_line_text = ""
+                     print(self.hidden_text)
+                else:
+                        self.label.setText(current_text+something)
+                        self.hidden_text = self.hidden_text + something
+                        self.new_line_text = ""
+                        print(self.hidden_text)
+
+        elif something != "2nd" and self.n ==1:
+            print(second_something)
+            if len(current_text) > 0 and second_something == "pi" and current_text[-1].isdigit():
+                current_text = current_text + "π"
+                self.hidden_text = self.hidden_text + "*np.pi"
+            elif second_something == "pi":
+                current_text = current_text + "π"
+                self.hidden_text = self.hidden_text + "np.pi"
+            else:
+                self.label.setText(current_text+second_something)
+                self.hidden_text = self.hidden_text + second_something
                 self.new_line_text = ""
                 print(self.hidden_text)
-        elif something != "2nd" and self.n ==1:
-            self.label.setText(current_text+second_something)
-            self.hidden_text = self.hidden_text + second_something
-            self.new_line_text = ""
-            print(self.hidden_text)
                 
 
+x = 4 * np.pi
+print(x)
 app = QApplication([])
 window = Window()
 window.show()
