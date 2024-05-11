@@ -19,6 +19,10 @@ class Window(QWidget):
         self.setFixedHeight(600)
         self.setFixedWidth(350)
         self.setStyleSheet('background-color:black')
+#list of buttons 
+        self.buttons = []
+        self.prim_text = []
+        self.sec_text = []
 #making buttons 
         #self.mk_button("Sto>", 10,528)
         self.mk_button("0",78,564)
@@ -32,8 +36,10 @@ class Window(QWidget):
         self.mk_button("7", 78,456)
         self.mk_button("8", 146,456)
         self.mk_button("9",214,456)
-        self.mk_button("(", 146,420, '#f7fffd', 13)
-        self.mk_button(")",214,420, '#f7fffd', 13)
+        self.mk_button("(", 146,420,'#303332', 13, 5000, "white")
+        self.mk_button(")",214,420, '#303332', 13, 5000, "white")
+        self.mk_button("^",282,384,'#303332', 15, 5000, "white","pi" )
+        self.mk_button("2nd",10,276,'#788b9c', 10, 551, "white")
         
 
 #MDAS
@@ -43,7 +49,7 @@ class Window(QWidget):
         self.mk_button("/",282,420, '#A9A7A7',20)
 #CLEAR/ENTER
         self.mk_button("ENTER",282,564,'#A9A7A7', 10, 551)
-        self.mk_button("CLEAR",282,348,'#A9A7A7', 10, 551)
+        self.mk_button("CLEAR",282,348,'#303332', 10, 551, "white")
 #some variables
         self.n=0
         self.new_line_text = ""
@@ -53,12 +59,16 @@ class Window(QWidget):
 
     
 
-    def mk_button(self,text, x , y, color ='#f7fffd', font = 15, weight_num = 5000):
-        btn = QPushButton(text,self)
-        btn.setGeometry(x,y,58,26)
-        btn.setFont(QFont('Times New Roman',font, weight=weight_num))
-        btn.setStyleSheet('background-color:'+color)
-        btn.clicked.connect(partial(self.clicked_button,text))
+    def mk_button(self,prim_text, x , y, color ='#f7fffd', font = 15, weight_num = 5000, text_color = "black", sec_text = ""):
+        self.btn = QPushButton(prim_text,self)
+        self.btn.setGeometry(x,y,58,26)
+        self.btn.setFont(QFont('Times New Roman',font, weight=weight_num))
+        self.btn.setStyleSheet("color: " +text_color + "; background-color: "+color)
+        #btn.setStyleSheet("color: " +text_color)
+        self.btn.clicked.connect(partial(self.clicked_button,prim_text))
+        self.buttons.append(self.btn)
+        self.prim_text.append(prim_text)
+        self.sec_text.append(sec_text)
 
 
 
@@ -74,17 +84,26 @@ class Window(QWidget):
         current_text = self.label.text()
         #self.hidden_text = self.hidden_text + something
 
-        if something == "ENTER":
+#2nd change button text
+        if something == "2nd" and self.n == 0:
+             self.n = 1
+             for i in range(len(self.buttons)):
+                self.buttons[i].setText(self.sec_text[i])
+        elif something == "2nd" and self.n == 1:
+             self.n =0
+             for i in range(len(self.buttons)):
+                self.buttons[i].setText(self.prim_text[i])
+                
+
+        elif something == "ENTER":
             #self.new_line_text= str(eval(self.hidden_text.split('\n')[self.n]))
             self.new_line_text= str(eval(self.hidden_text))
             self.label.setText(current_text + "\n" + self.new_line_text + "\n")
             self.hidden_text = ""
-            self.n+=2
         elif something == "CLEAR":
              current_text = ""
              self.new_line_text = ""
              self.hidden_text = ""
-             self.n=0
              self.label.setText(current_text)
         else:
                 #current_text = self.label.text()
@@ -101,8 +120,6 @@ class Window(QWidget):
                 #current_text = self.label.text()
                
                 
-        
-
 
 app = QApplication([])
 window = Window()
