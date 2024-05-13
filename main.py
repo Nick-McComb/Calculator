@@ -123,7 +123,7 @@ class Window(QWidget):
                      #self.hidden_text = self.hidden_text + something
                      #self.new_line_text = ""
                      #print(self.hidden_text)
-                elif len(current_text) > 0 and something.isdigit() and current_text[-1] == ")":
+                elif len(current_text) > 0 and something.isdigit() and current_text[-1] == ")" or len(current_text) > 0 and something.isdigit() and current_text[-1] == "π":
                      self.hidden_text = self.hidden_text + "*"
                 
                 self.label.setText(current_text+something)
