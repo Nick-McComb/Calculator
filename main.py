@@ -117,30 +117,24 @@ class Window(QWidget):
                     self.hidden_text = self.hidden_text + self.new_line_text 
                     self.label.setText(current_text+something)
                     self.hidden_text = self.hidden_text + something
-                    self.new_line_text = ""
-                    print(self.hidden_text)
-                #elif something == "SIN":
-                    #self.hidden_text = self.hidden_text +   
-#config for parenthesis (including with multiplication)
-                elif len(current_text) > 0 and something == "(" and current_text[-1].isdigit() or len(current_text) > 0 and something == "(" and current_text[-1] == ")" or len(current_text) > 0 and something == "(" and current_text[-1] == "π": 
-                     self.hidden_text = self.hidden_text + "*"
+#config for sin, cos, tan multiplied by an int/symbol
+                elif len(current_text) > 0 and (something == "SIN" or something == "COS" or something == "TAN") and (current_text[-1].isdigit() or current_text[-1] == "π"):
+                    self.hidden_text = self.hidden_text + "*np." + something.lower() + "("
+                    self.label.setText(current_text+ something.lower() + "(")
+#config for sin, cos, tan 
+                elif something == "SIN" or something == "COS" or something == "TAN":
+                    self.hidden_text = self.hidden_text + "np." + something.lower() + "("
+                    self.label.setText(current_text+ something.lower() + "(")
+#config for parenthesis/symbols (including with multiplication) [EX: (9)4, π4, 4π, 4(9), (4)(5)]
+                elif len(current_text) > 0 and something == "(" and (current_text[-1].isdigit() or current_text[-1] == "π" or current_text[-1] == ")") or len(current_text) > 0 and something.isdigit() and (current_text[-1] == ")" or current_text[-1] == "π"): 
+                     self.hidden_text = self.hidden_text + "*" + something
                      self.label.setText(current_text+something)
-                     self.hidden_text = self.hidden_text + something
-                     self.new_line_text = ""
-                     print(self.hidden_text)
-#config for multiplying something in parenthesis [EX: (9)4] or a symbol by an int [EX: π4]
-                elif len(current_text) > 0 and something.isdigit() and current_text[-1] == ")" or len(current_text) > 0 and something.isdigit() and current_text[-1] == "π":
-                     self.hidden_text = self.hidden_text + "*"
-                     self.label.setText(current_text+something)
-                     self.hidden_text = self.hidden_text + something
-                     self.new_line_text = ""
-                     print(self.hidden_text)
 #config for everything else
                 else:
                     self.label.setText(current_text+something)
                     self.hidden_text = self.hidden_text + something
-                    self.new_line_text = ""
-                    print(self.hidden_text)
+                self.new_line_text = ""
+                print(self.hidden_text)
                 
                 
 #config for calculator in 2nd
