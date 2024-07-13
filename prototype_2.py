@@ -8,33 +8,7 @@ import sys
 from PyQt6.QtGui import QIcon, QFont
 from functools import partial
 from PyQt6.QtCore import Qt
-'''
-window = tk.Tk()
 
-window.geometry("350x600")
-
-icon = Image.open('calculator.png')
-photo = ImageTk.PhotoImage(icon)
-window.wm_iconphoto(False, photo)
-
-
-for key, variable in calculator_nums.items():
-    buttons[key] = tk.Button(window, text = key,height = 3)
-    buttons[key].place(x=variable[0],y=variable[1])
-'''
-
-''''
-self.btn = QPushButton(prim_text,self)
-self.btn.setGeometry(x,y,58,26)
-        self.btn.setFont(QFont('Times New Roman',font, weight=weight_num))
-        self.btn.setStyleSheet("color: " +text_color + "; background-color: "+color)
-        self.buttons.append(self.btn)
-        self.prim_text.append(prim_text)
-        self.sec_text.append(sec_text)
-        self.btn.clicked.connect(partial(self.clicked_button,prim_text, sec_text))
-'''''
-
-#window.mainloop()
 
 class Window(QWidget):
     
