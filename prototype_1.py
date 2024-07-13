@@ -5,6 +5,7 @@ import sys
 from PyQt6.QtGui import QIcon, QFont
 from functools import partial
 from PyQt6.QtCore import Qt
+from libraries import buttons
 
 
 
@@ -47,6 +48,7 @@ class Window(QWidget):
         self.mk_button("SIN", 78,384,'#303332', 11, 5000, "white")
         self.mk_button("COS", 146,384,'#303332', 11, 5000, "white")
         self.mk_button("TAN",214,384, '#303332', 11, 5000, "white")
+
         
 
 #MDAS
