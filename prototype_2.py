@@ -8,6 +8,26 @@ import sys
 from PyQt6.QtGui import QIcon, QFont
 from functools import partial
 from PyQt6.QtCore import Qt
+import re
+
+
+def preprocess_check(expr): 
+    #inserts * between digit and parenthesis
+    expr = re.sub(r'(\d)(\()', r'\1*(', expr)
+    #inserts * between parenthesis and digit
+    expr = re.sub(r'(\))(\d)', r')*\2', expr)
+    #inserts * between variable and digit
+    expr = re.sub(r'([a-zA-Z])(\d)', r'\1*\2', expr)
+    #inserts * between digit and variable
+    expr = re.sub(r'(\d)([a-zA-Z])', r'\1*\2', expr)
+    #inserts * between parenthesis and variable
+    expr = re.sub(r'(\))([a-zA-Z])', r')*\2',expr)
+    #inserts * between variable and parenthesis
+    expr = re.sub(r'([a-zA-Z])(\()', r'\1*(', expr)
+    #inserts * between parenthesis
+    expr = re.sub(r'(\))(\()', r'\1*(', expr)
+    
+    return(expr)
 
 
 class Window(QWidget):
@@ -25,10 +45,19 @@ class Window(QWidget):
 
     def create_btns(self):
         for key, variable in calculator_nums.items():
-            buttons[key] = QPushButton(key,self)
-            buttons[key].setGeometry(variable[0],variable[1],58,26)
-            buttons[key].setFont(QFont('Times New Roman',15, weight=5000))
-            buttons[key].setStyleSheet("color: black; background-color: #f7fffd")
+            buttons[key] = {}
+            buttons[key]["object_id"] = QPushButton(key,self)
+            buttons[key]["object_id"].setGeometry(variable[0],variable[1],58,26)
+            buttons[key]["object_id"].setFont(QFont('Times New Roman',15, weight=5000))
+            buttons[key]["object_id"].setStyleSheet("color: black; background-color: #f7fffd")
+            buttons[key]["object_text"] = key
+            buttons[key]["x"] = variable[0]
+            buttons[key]["y"] = variable[1]
+
+    
+
+
+            
 
 
 
@@ -36,5 +65,6 @@ class Window(QWidget):
 app = QApplication([])
 window = Window()
 window.show()
-print(buttons)
+print(preprocess_check('(4)(3)'))
+#print(eval('(4)(3)'))
 sys.exit(app.exec())
