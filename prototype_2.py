@@ -29,6 +29,8 @@ def preprocess_check(expr):
     
     return(expr)
 
+'''def btn_location(calculator_nums):
+    pass'''
 
 class Window(QWidget):
     
@@ -41,8 +43,20 @@ class Window(QWidget):
         self.setFixedHeight(600)
         self.setFixedWidth(350)
         self.setStyleSheet('background-color:black')
+#make number buttons
         self.create_btns()
+#make screen
+        self.create_screen()
 
+    def create_screen(self):
+        self.label = QLabel("", self)
+        self.label.setAlignment(Qt.AlignmentFlag.AlignLeft)
+        self.label.setIndent(10)
+        self.label.setGeometry(10,10,330,184)
+        self.label.setStyleSheet('background-color:#a6bf9f')
+        self.label.setFont(QFont('Times New Roman', 17))
+
+#creates standard buttons
     def create_btns(self):
         for key, variable in calculator_nums.items():
             buttons[key] = {}
@@ -50,13 +64,30 @@ class Window(QWidget):
             buttons[key]["object_id"].setGeometry(variable[0],variable[1],58,26)
             buttons[key]["object_id"].setFont(QFont('Times New Roman',15, weight=5000))
             buttons[key]["object_id"].setStyleSheet("color: black; background-color: #f7fffd")
-            buttons[key]["object_text"] = key
+
+#work in progress trying to create for special cases
+            '''if (len(variable)>2):
+                buttons[key]["object_text"] = variable[-1]
+            else:
+                buttons[key]["object_text"] = key'''
+
             buttons[key]["x"] = variable[0]
             buttons[key]["y"] = variable[1]
             buttons[key]["object_id"].clicked.connect(partial(self.btn_pressed, buttons[key]["object_text"]))
-    
-    def btn_pressed(self, object_text):
+
+    def btn_pressed(self,object_text):
+        expr = self.label.text()
+        expr += object_text
+        self.label.setText(expr)
         print(object_text)
+
+    def create_spec_btns(self):
+        pass
+
+    
+
+    
+    
 
         
 
@@ -71,6 +102,7 @@ class Window(QWidget):
 app = QApplication([])
 window = Window()
 window.show()
-print(preprocess_check('(4)(3)'))
+print("456".isdigit())
+#print(preprocess_check('(4)(3)'))
 #print(eval('(4)(3)'))
 sys.exit(app.exec())
