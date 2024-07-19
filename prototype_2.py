@@ -53,6 +53,12 @@ class Window(QWidget):
             buttons[key]["object_text"] = key
             buttons[key]["x"] = variable[0]
             buttons[key]["y"] = variable[1]
+            buttons[key]["object_id"].clicked.connect(partial(self.btn_pressed, buttons[key]["object_text"]))
+    
+    def btn_pressed(self, object_text):
+        print(object_text)
+
+        
 
     
 
