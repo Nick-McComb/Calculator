@@ -23,7 +23,7 @@ def preprocess_check(expr):
     #inserts * between parenthesis and variable
     expr = re.sub(r'(\))([a-zA-Z])', r')*\2',expr)
     #inserts * between variable and parenthesis
-    expr = re.sub(r'([a-zA-Z])(\()', r'\1*(', expr)
+    #expr = re.sub(r'([a-zA-Z])(\()', r'\1*(', expr)
     #inserts * between parenthesis
     expr = re.sub(r'(\))(\()', r'\1*(', expr)
     
@@ -66,22 +66,31 @@ class Window(QWidget):
             buttons[key]["object_id"].setStyleSheet("color: black; background-color: #f7fffd")
 
 #work in progress trying to create for special cases
-            '''if (len(variable)>2):
-                buttons[key]["object_text"] = variable[-1]
+            if (len(variable)>2):
+                buttons[key]["object_text"] = variable[2]
+                buttons[key]["displayed_text"] = variable[3]
             else:
-                buttons[key]["object_text"] = key'''
-
+                buttons[key]["object_text"] =  key
+                buttons[key]["displayed_text"] = key
+                
+            #buttons[key]["object_text"] = key
             buttons[key]["x"] = variable[0]
             buttons[key]["y"] = variable[1]
-            buttons[key]["object_id"].clicked.connect(partial(self.btn_pressed, buttons[key]["object_text"]))
+            buttons[key]["object_id"].clicked.connect(partial(self.btn_pressed, buttons[key]["object_text"], buttons[key]["displayed_text"]))
 
-    def btn_pressed(self,object_text):
-        expr = self.label.text()
-        expr += object_text
-        self.label.setText(expr)
-        print(object_text)
+    def btn_pressed(self,object_text,displayed_text):
+        self.expr = self.label.text()
+        self.expr += object_text
+        displayed = self.label.text()
+        displayed += displayed_text
+        self.label.setText(displayed)
+        print(self.expr)
+        processed_expr = preprocess_check(self.expr)
+        print(processed_expr)
 
-    def create_spec_btns(self):
+    def enter_pressed(self):
+        processed_expr = preprocess_check(self.expr)
+        print(processed_expr)
         pass
 
     
@@ -102,7 +111,10 @@ class Window(QWidget):
 app = QApplication([])
 window = Window()
 window.show()
-print("456".isdigit())
+#print("456".isdigit())
 #print(preprocess_check('(4)(3)'))
 #print(eval('(4)(3)'))
+x = "x(6)"
+print(preprocess_check(x))
+#print(eval("np.sin(3)6"))
 sys.exit(app.exec())
